@@ -46,9 +46,9 @@
         audioDescription.mSampleRate              = sampleRate;//采样率
         audioDescription.mFormatID                = formatID;
         audioDescription.mFormatFlags             = formatFlags;
-        audioDescription.mChannelsPerFrame        = channelsPerFrame;///单声道
-        audioDescription.mFramesPerPacket         = framesPerPacket;//每一个packet一侦数据
-        audioDescription.mBitsPerChannel          = bitsPerChannel;//每个采样点16bit量化
+        audioDescription.mChannelsPerFrame        = (UInt32)channelsPerFrame;///单声道
+        audioDescription.mFramesPerPacket         = (UInt32)framesPerPacket;//每一个packet一侦数据
+        audioDescription.mBitsPerChannel          = (UInt32)bitsPerChannel;//每个采样点16bit量化
         audioDescription.mBytesPerFrame           = (audioDescription.mBitsPerChannel / 8) * audioDescription.mChannelsPerFrame;
         audioDescription.mBytesPerPacket          = audioDescription.mBytesPerFrame * audioDescription.mFramesPerPacket;
 

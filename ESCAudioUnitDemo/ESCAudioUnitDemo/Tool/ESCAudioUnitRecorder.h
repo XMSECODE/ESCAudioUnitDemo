@@ -9,7 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
+@protocol ESCAudioUnitRecorderDelegate <NSObject>
+
+- (void)ESCAudioUnitRecorderReceivedAudioData:(NSData *)data;
+
+@end
+
 @interface ESCAudioUnitRecorder : NSObject
+
+@property(nonatomic,weak)id<ESCAudioUnitRecorderDelegate> delegate;
 
 - (instancetype)initWithSampleRate:(NSInteger)sampleRate
                           formatID:(AudioFormatID)formatID
@@ -17,9 +25,6 @@
                   channelsPerFrame:(NSInteger)channelsPerFrame
                     bitsPerChannel:(NSInteger)bitsPerChannel
                    framesPerPacket:(NSInteger)framesPerPacket;
-
-- (void)startRecordToFilePath:(NSString *)filePath;
-- (void)stopRecordToFile;
 
 - (void)startRecordToStream;
 - (void)stopRecordToStream;
