@@ -9,19 +9,13 @@
 #import "ESCAudioUnitRecorder.h"
 #import <AVFoundation/AVFoundation.h>
 
-static AudioUnit audioUnit;
-
-//#define INPUT_BUS 0;
-//播放为0--接触到inputscope
-//static int INPUT_BUS_element = 0;
 //录音为1--接触到outscope
-static int OUTPUT_BUS_element = 1;
-
-static AudioBufferList *buffList;
+static int record_element = 1;
 
 @interface ESCAudioUnitRecorder () {
     AudioStreamBasicDescription audioDescription;///音频参数
-
+    AudioUnit audioUnit;
+    AudioBufferList *buffList;
 }
 
 @end
@@ -59,36 +53,19 @@ static AudioBufferList *buffList;
 
 }
 
-OSStatus PlayCallback(void *inRefCon,
-                      AudioUnitRenderActionFlags *ioActionFlags,
-                      const AudioTimeStamp *inTimeStamp,
-                      UInt32 inBusNumber,
-                      UInt32 inNumberFrames,
-                      AudioBufferList *ioData) {
-    NSLog(@"size2 = %d", ioData->mBuffers[0].mDataByteSize);
-    memcpy(ioData->mBuffers[0].mData, buffList->mBuffers[0].mData, ioData->mBuffers[0].mDataByteSize);
-    AudioUnitRender(audioUnit, ioActionFlags, inTimeStamp, 1, inNumberFrames, buffList);
-    
-    return noErr;
-}
-
-
 #pragma mark - callback function
-
 OSStatus RecordCallback(void *inRefCon,
                         AudioUnitRenderActionFlags *ioActionFlags,
                         const AudioTimeStamp *inTimeStamp,
                         UInt32 inBusNumber,
                         UInt32 inNumberFrames,
-                        AudioBufferList *ioData)
-{
+                        AudioBufferList *ioData) {
     ESCAudioUnitRecorder *audioUnitRecorder = (__bridge ESCAudioUnitRecorder *)(inRefCon);
+    AudioUnitRender(audioUnitRecorder->audioUnit, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, audioUnitRecorder->buffList);
     
-    AudioUnitRender(audioUnit, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, buffList);
+    NSLog(@"record size = %d", audioUnitRecorder->buffList->mBuffers[0].mDataByteSize);
     
-    NSLog(@"size1 = %d", buffList->mBuffers[0].mDataByteSize);
-    
-    NSData *data = [NSData dataWithBytes:buffList->mBuffers[0].mData length:buffList->mBuffers[0].mDataByteSize];
+    NSData *data = [NSData dataWithBytes:audioUnitRecorder->buffList->mBuffers[0].mData length:audioUnitRecorder->buffList->mBuffers[0].mDataByteSize];
     if (audioUnitRecorder.delegate && [audioUnitRecorder.delegate respondsToSelector:@selector(ESCAudioUnitRecorderReceivedAudioData:)]) {
         [audioUnitRecorder.delegate ESCAudioUnitRecorderReceivedAudioData:data];
     }
@@ -121,23 +98,23 @@ OSStatus RecordCallback(void *inRefCon,
     
     BOOL result = [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
     if (error) {
-        NSLog(@"audio session set category failed!");
+        NSLog(@"audio session set category failed! %@",error);
     }
     result = [audioSession setPreferredSampleRate:8000 error:&error];
     if (error) {
-        NSLog(@"audio session set samplerate failed!");
+        NSLog(@"audio session set samplerate failed! %@",error);
     }
     result = [audioSession setPreferredInputNumberOfChannels:1 error:&error];
     if (error) {
-        NSLog(@"audio session set preferred failed!");
+        NSLog(@"audio session set preferred failed! %@",error);
     }
     result = [audioSession setPreferredOutputNumberOfChannels:1 error:&error];
     if (error) {
-        NSLog(@"audio session set ouput number channel failed!");
+        NSLog(@"audio session set ouput number channel failed! %@",error);
     }
     result = [audioSession setPreferredIOBufferDuration:0.022 error:&error];
     if (error) {
-        NSLog(@"audio session set buffer duration failed!");
+        NSLog(@"audio session set buffer duration failed! %@",error);
     }
 }
 
@@ -158,7 +135,7 @@ OSStatus RecordCallback(void *inRefCon,
     OSStatus status = AudioUnitSetProperty(audioUnit,
                                            kAudioUnitProperty_ShouldAllocateBuffer,
                                            kAudioUnitScope_Output,
-                                           OUTPUT_BUS_element,
+                                           record_element,
                                            &flag,
                                            sizeof(flag));
     if (status != noErr) {
@@ -175,30 +152,8 @@ OSStatus RecordCallback(void *inRefCon,
 
 
 - (void)initFormat {
-//    AudioStreamBasicDescription audioFormat;
-//    audioFormat.mSampleRate = 8000;
-//    audioFormat.mFormatID = kAudioFormatLinearPCM;
-//    audioFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
-//    audioFormat.mFramesPerPacket = 1;
-//    audioFormat.mChannelsPerFrame = 1;
-//    audioFormat.mBitsPerChannel = 16;
-//    audioFormat.mBytesPerFrame = audioFormat.mBitsPerChannel * audioFormat.mChannelsPerFrame / 8;
-//    audioFormat.mBytesPerPacket = audioFormat.mBytesPerFrame * audioFormat.mFramesPerPacket;
-//    audioFormat.mReserved = 0;
-    
-    AudioStreamBasicDescription audioformatinput;
     OSStatus status;
-    char *ff[1000];
-    void *data = ff;
-    UInt32 size = 40;
-    status = AudioUnitGetProperty(audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, OUTPUT_BUS_element, data, &size);
-    if (status == noErr) {
-        NSLog(@"get format success！");
-        memcpy(&audioformatinput, data, size);
-    }else {
-        NSLog(@"get format failed!");
-    }
-    status = AudioUnitSetParameter(audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, OUTPUT_BUS_element, kAudioUnitSubType_VoiceProcessingIO, kAudioUnitSubType_VoiceProcessingIO);
+    status = AudioUnitSetParameter(audioUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, record_element, kAudioUnitSubType_VoiceProcessingIO, kAudioUnitSubType_VoiceProcessingIO);
     
     if (status != noErr) {
         NSLog(@"SetParameter failed！");
@@ -218,7 +173,7 @@ OSStatus RecordCallback(void *inRefCon,
     status = AudioUnitSetProperty(audioUnit,
                                   kAudioUnitProperty_StreamFormat,
                                   kAudioUnitScope_Output,
-                                  OUTPUT_BUS_element,
+                                  record_element,
                                   &audioDescription,
                                   sizeof(audioDescription));
     if (status != noErr) {
@@ -233,7 +188,7 @@ OSStatus RecordCallback(void *inRefCon,
     AudioUnitSetProperty(audioUnit,
                          kAudioOutputUnitProperty_SetInputCallback,
                          kAudioUnitScope_Global,
-                         OUTPUT_BUS_element,
+                         record_element,
                          &recordCallback,
                          sizeof(recordCallback));
 }
@@ -265,7 +220,7 @@ OSStatus RecordCallback(void *inRefCon,
     status = AudioUnitSetProperty(audioUnit,
                                   kAudioOutputUnitProperty_EnableIO,
                                   kAudioUnitScope_Input,
-                                  OUTPUT_BUS_element,
+                                  record_element,
                                   &flag,
                                   sizeof(flag));
     if (status != noErr) {

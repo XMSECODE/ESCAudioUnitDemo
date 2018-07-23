@@ -9,9 +9,8 @@
 #import "ViewController.h"
 #import "ESCAudioUnitPlayer.h"
 #import "AudioHandler.h"
-#import "ESCAudioStreamPlayer.h"
 #import "ESCAudioUnitRecorder.h"
-
+#import "ESCAudioUnitStreamPlayer.h"
 
 @interface ViewController ()<ESCAudioUnitRecorderDelegate> {
     
@@ -23,11 +22,11 @@
 
 @property(nonatomic,strong)AudioHandler* audioHandler;
 
-@property(nonatomic,strong)ESCAudioStreamPlayer *streamPlayer;
-
 @property(nonatomic,strong)NSMutableData* temData;
 
 @property(nonatomic,strong)AVAudioPlayer* audioPlayer;
+
+@property(nonatomic,strong)ESCAudioUnitStreamPlayer* unitStreamPlayer;
 
 @end
 
@@ -55,65 +54,72 @@
 }
 
 - (IBAction)didClickPlayPCMStreamButton:(id)sender {
-    self.streamPlayer = [[ESCAudioStreamPlayer alloc] initWithSampleRate:44100 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:2 bitsPerChannel:16 framesPerPacket:1];
+    self.unitStreamPlayer = [[ESCAudioUnitStreamPlayer alloc] initWithSampleRate:44100 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:2 bitsPerChannel:16 framesPerPacket:1];
     NSString *pcmFilePath = [[NSBundle mainBundle] pathForResource:@"vocal.pcm" ofType:nil];
     
-//        self.streamPlayer = [[ESCAudioStreamPlayer alloc] initWithSampleRate:8000 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:1 bitsPerChannel:16 framesPerPacket:1];
+//    self.unitStreamPlayer = [[ESCAudioUnitStreamPlayer alloc] initWithSampleRate:8000 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:1 bitsPerChannel:16 framesPerPacket:1];
 //        NSString *pcmFilePath = [[NSBundle mainBundle] pathForResource:@"1708101114545.pcm" ofType:nil];
-    //
+    
     
     [self.audioHandler start:AU_op_Listen audioFormat:1];
     
     NSData *pcmData = [NSData dataWithContentsOfFile:pcmFilePath];
-    NSInteger count = 100;
+    NSInteger count = pcmData.length / 1000;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         for (int i = 0; i < count; i++) {
             NSInteger lenth = pcmData.length / count;
             NSData *pcmDatarange = [pcmData subdataWithRange:NSMakeRange(i * lenth, lenth)];
-            //            NSLog(@"encode buffer %d==%d",i,lenth);
-            [self.streamPlayer play:pcmDatarange];
+//            NSLog(@"encode buffer %d==%d",i,lenth);
+            [self.unitStreamPlayer play:pcmDatarange];
         }
         //模拟中断
-        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
-        //            for (int i = 0; i < count; i++) {
-        //                NSInteger lenth = pcmData.length / count;
-        //                NSData *pcmDatarange = [pcmData subdataWithRange:NSMakeRange(i * lenth, lenth)];
-        //                //            NSLog(@"encode buffer %d==%d",i,lenth);
-        //                [self.streamPlayer play:pcmDatarange];
-        //
-        //            }
-        //        });
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
+//                    for (int i = 0; i < count; i++) {
+//                        NSInteger lenth = pcmData.length / count;
+//                        NSData *pcmDatarange = [pcmData subdataWithRange:NSMakeRange(i * lenth, lenth)];
+//                        //            NSLog(@"encode buffer %d==%d",i,lenth);
+//                        [self.unitStreamPlayer play:pcmDatarange];
+//
+//                    }
+//                });
     });
 }
 - (IBAction)didClickStopPlayPCMStreamButton:(id)sender {
-    [self.streamPlayer stop];
+    [self.unitStreamPlayer stop];
 }
 
 - (IBAction)didClickRecordFileStreamButton:(id)sender {
-    if (self.audioUnitRecorder == nil) {
-        self.audioUnitRecorder = [[ESCAudioUnitRecorder alloc] initWithSampleRate:8000 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:1 bitsPerChannel:16 framesPerPacket:1];
-        self.audioUnitRecorder.delegate = self;
-        [self.audioUnitRecorder startRecordToStream];
-        self.streamPlayer = [[ESCAudioStreamPlayer alloc] initWithSampleRate:8000 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:1 bitsPerChannel:16 framesPerPacket:1];
-    }
+    
 }
 
 - (IBAction)didClickStopRecordButton:(id)sender {
-    [self.audioUnitRecorder stopRecordToStream];
-    [self.streamPlayer stop];
-    self.audioUnitRecorder = nil;
-    self.streamPlayer = nil;
+ 
 }
 
 - (IBAction)didClickPlayRecordStreamButton:(id)sender {
 }
 
 - (IBAction)didClickStopPlayRecordStreamButton:(id)sender {
+    
+}
+- (IBAction)didClickAtSameTimeRecorderAndPlayPCMButton:(id)sender {
+    if (self.audioUnitRecorder == nil) {
+        self.audioUnitRecorder = [[ESCAudioUnitRecorder alloc] initWithSampleRate:20000 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:1 bitsPerChannel:16 framesPerPacket:1];
+        self.audioUnitRecorder.delegate = self;
+        [self.audioUnitRecorder startRecordToStream];
+        self.unitStreamPlayer = [[ESCAudioUnitStreamPlayer alloc] initWithSampleRate:20000 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:1 bitsPerChannel:16 framesPerPacket:1];
+    }
+}
+- (IBAction)didClickStopRecorderAndPlayPCMButton:(id)sender {
+    [self.audioUnitRecorder stopRecordToStream];
+    [self.unitStreamPlayer stop];
+    self.audioUnitRecorder = nil;
+    self.unitStreamPlayer = nil;
 }
 
 #pragma mark - ESCAudioUnitRecorderDelegate
 - (void)ESCAudioUnitRecorderReceivedAudioData:(NSData *)data {
-    [self.streamPlayer play:data];
+    [self.unitStreamPlayer  play:data];
 }
 
 @end

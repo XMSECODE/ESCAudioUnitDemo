@@ -150,11 +150,51 @@
                                     <constraint firstItem="OHe-2k-Fr0" firstAttribute="top" secondItem="saz-XN-6Be" secondAttribute="top" constant="20" id="xk6-ee-k2y"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfT-XA-mfh">
+                                <rect key="frame" x="0.0" y="420" width="375" height="120"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nC5-vr-YP1">
+                                        <rect key="frame" x="117.5" y="20" width="140" height="30"/>
+                                        <state key="normal" title="同时录制播放PCM流"/>
+                                        <connections>
+                                            <action selector="didClickAtSameTimeRecorderAndPlayPCMButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Acm-Z3-Fqz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVd-ek-IiN">
+                                        <rect key="frame" x="109.5" y="70" width="156" height="30"/>
+                                        <state key="normal" title="停止同时录制播放PCM"/>
+                                        <connections>
+                                            <action selector="didClickStopRecorderAndPlayPCMButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jHc-aB-zkX"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFQ-Jk-p4d">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="D8e-kz-7O3"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="nC5-vr-YP1" firstAttribute="centerX" secondItem="hfT-XA-mfh" secondAttribute="centerX" id="6gq-cs-lFy"/>
+                                    <constraint firstAttribute="height" constant="120" id="CMJ-5i-5hM"/>
+                                    <constraint firstItem="SFQ-Jk-p4d" firstAttribute="leading" secondItem="hfT-XA-mfh" secondAttribute="leading" id="UQo-OM-7ho"/>
+                                    <constraint firstItem="nC5-vr-YP1" firstAttribute="top" secondItem="hfT-XA-mfh" secondAttribute="top" constant="20" id="UuR-iC-YKh"/>
+                                    <constraint firstItem="MVd-ek-IiN" firstAttribute="top" secondItem="nC5-vr-YP1" secondAttribute="bottom" constant="20" id="ktF-d0-Hlw"/>
+                                    <constraint firstAttribute="trailing" secondItem="SFQ-Jk-p4d" secondAttribute="trailing" id="nnS-uK-nrV"/>
+                                    <constraint firstItem="MVd-ek-IiN" firstAttribute="centerX" secondItem="hfT-XA-mfh" secondAttribute="centerX" id="x7h-Os-0tr"/>
+                                    <constraint firstItem="SFQ-Jk-p4d" firstAttribute="top" secondItem="hfT-XA-mfh" secondAttribute="top" id="xlT-5s-ltj"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="saz-XN-6Be" firstAttribute="top" secondItem="rCI-c9-zi3" secondAttribute="bottom" id="0mN-rc-ouf"/>
                             <constraint firstItem="vNF-Yf-lBY" firstAttribute="leading" secondItem="p23-UU-GiP" secondAttribute="leading" id="6uX-Sb-5WA"/>
+                            <constraint firstAttribute="trailing" secondItem="hfT-XA-mfh" secondAttribute="trailing" id="Fey-UT-UVZ"/>
+                            <constraint firstItem="hfT-XA-mfh" firstAttribute="leading" secondItem="p23-UU-GiP" secondAttribute="leading" id="RM6-9S-a5O"/>
+                            <constraint firstItem="hfT-XA-mfh" firstAttribute="top" secondItem="saz-XN-6Be" secondAttribute="bottom" id="W3q-w7-Go4"/>
                             <constraint firstItem="vNF-Yf-lBY" firstAttribute="top" secondItem="EWZ-sM-QNc" secondAttribute="bottom" id="aFG-Kh-fcI"/>
                             <constraint firstItem="rCI-c9-zi3" firstAttribute="top" secondItem="vNF-Yf-lBY" secondAttribute="bottom" id="b3Q-Bc-hv1"/>
                             <constraint firstItem="saz-XN-6Be" firstAttribute="leading" secondItem="p23-UU-GiP" secondAttribute="leading" id="eJz-5k-TTy"/>

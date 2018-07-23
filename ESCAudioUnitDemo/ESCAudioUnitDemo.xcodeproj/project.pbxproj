@@ -21,7 +21,6 @@
 		F099B8172101733000C851BE /* ESCAudioUnitRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B8162101733000C851BE /* ESCAudioUnitRecorder.m */; };
 		F099B81A2101735300C851BE /* ESCAudioUnitStreamPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B8192101735300C851BE /* ESCAudioUnitStreamPlayer.m */; };
 		F099B81D2101B31100C851BE /* AudioHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B81C2101B31100C851BE /* AudioHandler.m */; };
-		F099B8222101D84900C851BE /* ESCAudioStreamPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B8202101D84800C851BE /* ESCAudioStreamPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +46,6 @@
 		F099B8192101735300C851BE /* ESCAudioUnitStreamPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ESCAudioUnitStreamPlayer.m; sourceTree = "<group>"; };
 		F099B81B2101B31100C851BE /* AudioHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioHandler.h; sourceTree = "<group>"; };
 		F099B81C2101B31100C851BE /* AudioHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioHandler.m; sourceTree = "<group>"; };
-		F099B8202101D84800C851BE /* ESCAudioStreamPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESCAudioStreamPlayer.m; sourceTree = "<group>"; };
-		F099B8212101D84800C851BE /* ESCAudioStreamPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESCAudioStreamPlayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +83,6 @@
 				F099B7F52101718900C851BE /* ViewController.h */,
 				F099B7F62101718900C851BE /* ViewController.m */,
 				F099B7F82101718900C851BE /* Main.storyboard */,
-				F099B8212101D84800C851BE /* ESCAudioStreamPlayer.h */,
-				F099B8202101D84800C851BE /* ESCAudioStreamPlayer.m */,
 				F099B8092101727400C851BE /* Resource */,
 				F099B8082101726F00C851BE /* Tool */,
 			);
@@ -205,7 +200,6 @@
 				F099B802210171A400C851BE /* main.m in Sources */,
 				F099B7F42101718900C851BE /* AppDelegate.m in Sources */,
 				F099B81D2101B31100C851BE /* AudioHandler.m in Sources */,
-				F099B8222101D84900C851BE /* ESCAudioStreamPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,14 +340,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4SF28MHQDQ;
+				DEVELOPMENT_TEAM = NZ6KCMA9HH;
 				INFOPLIST_FILE = "$(SRCROOT)/ESCAudioUnitDemo/Resource/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiang.ESCAudioUnitDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiang.ESCAudioUnitDemo.anni;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,14 +358,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4SF28MHQDQ;
+				DEVELOPMENT_TEAM = NZ6KCMA9HH;
 				INFOPLIST_FILE = "$(SRCROOT)/ESCAudioUnitDemo/Resource/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xiang.ESCAudioUnitDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiang.ESCAudioUnitDemo.anni;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
