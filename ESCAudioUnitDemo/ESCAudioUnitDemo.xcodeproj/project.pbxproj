@@ -20,7 +20,6 @@
 		F099B8142101731D00C851BE /* ESCAudioUnitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B8132101731D00C851BE /* ESCAudioUnitPlayer.m */; };
 		F099B8172101733000C851BE /* ESCAudioUnitRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B8162101733000C851BE /* ESCAudioUnitRecorder.m */; };
 		F099B81A2101735300C851BE /* ESCAudioUnitStreamPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B8192101735300C851BE /* ESCAudioUnitStreamPlayer.m */; };
-		F099B81D2101B31100C851BE /* AudioHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F099B81C2101B31100C851BE /* AudioHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,8 +43,6 @@
 		F099B8162101733000C851BE /* ESCAudioUnitRecorder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ESCAudioUnitRecorder.m; sourceTree = "<group>"; };
 		F099B8182101735300C851BE /* ESCAudioUnitStreamPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ESCAudioUnitStreamPlayer.h; sourceTree = "<group>"; };
 		F099B8192101735300C851BE /* ESCAudioUnitStreamPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ESCAudioUnitStreamPlayer.m; sourceTree = "<group>"; };
-		F099B81B2101B31100C851BE /* AudioHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioHandler.h; sourceTree = "<group>"; };
-		F099B81C2101B31100C851BE /* AudioHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +89,6 @@
 		F099B8082101726F00C851BE /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				F099B81B2101B31100C851BE /* AudioHandler.h */,
-				F099B81C2101B31100C851BE /* AudioHandler.m */,
 				F099B8122101731D00C851BE /* ESCAudioUnitPlayer.h */,
 				F099B8132101731D00C851BE /* ESCAudioUnitPlayer.m */,
 				F099B8182101735300C851BE /* ESCAudioUnitStreamPlayer.h */,
@@ -199,7 +194,6 @@
 				F099B8142101731D00C851BE /* ESCAudioUnitPlayer.m in Sources */,
 				F099B802210171A400C851BE /* main.m in Sources */,
 				F099B7F42101718900C851BE /* AppDelegate.m in Sources */,
-				F099B81D2101B31100C851BE /* AudioHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

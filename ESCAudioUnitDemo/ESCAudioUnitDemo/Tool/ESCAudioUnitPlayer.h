@@ -17,5 +17,5 @@
 - (void)stop;
 
 - (void)pause;
-
+- (BOOL)checkError:(int)error ;
 @end

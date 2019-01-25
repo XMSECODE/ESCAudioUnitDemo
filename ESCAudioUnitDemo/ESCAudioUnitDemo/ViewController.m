@@ -8,9 +8,9 @@
 
 #import "ViewController.h"
 #import "ESCAudioUnitPlayer.h"
-#import "AudioHandler.h"
 #import "ESCAudioUnitRecorder.h"
 #import "ESCAudioUnitStreamPlayer.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface ViewController ()<ESCAudioUnitRecorderDelegate> {
     
@@ -19,8 +19,6 @@
 @property(nonatomic,strong)ESCAudioUnitRecorder* audioUnitRecorder;
 
 @property(nonatomic,strong)ESCAudioUnitPlayer* mp3Player;
-
-@property(nonatomic,strong)AudioHandler* audioHandler;
 
 @property(nonatomic,strong)NSMutableData* temData;
 
@@ -39,7 +37,7 @@
 }
 
 - (IBAction)didClickPlayLocalMp3File:(id)sender {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Bridge - 雾都历.mp3" ofType:nil];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"G.E.M.邓紫棋 - 喜欢你.mp3" ofType:nil];
     ESCAudioUnitPlayer *player = [[ESCAudioUnitPlayer alloc] initWithFilePath:filePath];
     [player startPlay];
     self.mp3Player = player;
@@ -60,8 +58,6 @@
 //    self.unitStreamPlayer = [[ESCAudioUnitStreamPlayer alloc] initWithSampleRate:8000 formatID:kAudioFormatLinearPCM formatFlags:kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked channelsPerFrame:1 bitsPerChannel:16 framesPerPacket:1];
 //        NSString *pcmFilePath = [[NSBundle mainBundle] pathForResource:@"1708101114545.pcm" ofType:nil];
     
-    
-    [self.audioHandler start:AU_op_Listen audioFormat:1];
     
     NSData *pcmData = [NSData dataWithContentsOfFile:pcmFilePath];
     NSInteger count = pcmData.length / 1000;

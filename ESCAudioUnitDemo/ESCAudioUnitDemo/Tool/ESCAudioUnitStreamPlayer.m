@@ -109,7 +109,7 @@ OSStatus PlayCallback(void *inRefCon,
 //        NSData *pcmDatarange = [playData subdataWithRange:NSMakeRange(player.currentPlayIndex, ioData->mBuffers[0].mDataByteSize)];
         NSData *pcmDatarange = [player getLenthDataFromCachData:ioData->mBuffers[0].mDataByteSize];
 //        player.currentPlayIndex+= ioData->mBuffers[0].mDataByteSize;
-
+        ioData->mNumberBuffers = 1;
         const void *palydata = [pcmDatarange bytes];
 
         memcpy(ioData->mBuffers[0].mData, palydata, pcmDatarange.length);
